@@ -1,90 +1,49 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.24;
 
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
-contract Prescription is ERC721, Ownable {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
+contract Prescription is ERC1155, Ownable {
+    constructor(address pharmacyDAO) ERC1155("") Ownable(pharmacyDAO) {}
 
-    struct Prescription {
-        string name;
-        string description;
-        address doctor;
-        address patient;
-        string date;
-        boolean approved;
-    }
-
-    mapping(uint256 => Prescription) private _prescriptions;
-    address public pharmacyDAO;
-
-    event PrescriptionProposed(uint256 prescriptionId);
-
-    modifier onlyPharmacyDAO() {
-        require(msg.sender == pharmacyDAO, "Caller is not the PharmacyDAO");
-        _;
-    }
-
-    constructor(address _pharmacyDAO) ERC721("Prescription", "RX") {
-        pharmacyDAO = _pharmacyDAO;
-    }
-
-    function setPharmacyDAO(address _pharmacyDAO) external onlyOwner {
-        pharmacyDAO = _pharmacyDAO;
-    }
-
-    function proposePrescription(
-        string memory name,
-        string memory description,
+    function mint(
+        string memory uri,
+        uint256 amount,
         address patient,
-        string memory date
-    ) public onlyPharmacyDAO returns (uint256) {
-        _tokenIds.increment();
-        uint256 newPrescriptionId = _tokenIds.current();
-        _prescriptions[newPrescriptionId] = Prescription(
-            name,
-            description,
-            msg.sender,
-            patient,
-            date,
-            false
-        );
-        emit PrescriptionProposed(newPrescriptionId);
-        return newPrescriptionId;
+        bytes memory data
+    ) public onlyOwner returns (uint256) {
+        _currentTokenID++;
+        uint256 newItemId = _currentTokenID;
+
+        _mint(msg.sender, newItemId, amount, data);
+
+        return newItemId;
     }
 
-    function approvePrescription(uint256 prescriptionId) public onlyPharmacyDAO {
-        _prescriptions[prescriptionId].approved = true;
-        _mint(_prescriptions[prescriptionId].patient, prescriptionId);
+    function mintBatch(
+        string memory uri,
+        uint256[] memory amounts,
+        address patient,
+        bytes memory data
+    ) public onlyOwner returns (uint256[] memory) {
+        uint256[] memory newItemIds = new uint256[](amounts.length);
+
+        _mintBatch(patient, newItemIds, amounts, data);
+
+        return newItemIds;
     }
 
-    function getPrescription(uint256 prescriptionId)
-        public
-        view
-        returns (
-            string memory name,
-            string memory description,
-            address doctor,
-            address patient,
-            string memory date,
-            boolean approved
-        )
+    function setURI(string memory newuri) public onlyOwner {
+        _setURI(newuri);
+    }
+
+    function _update(address from, address to, uint256[] memory ids, uint256[] memory values)
+        internal
+        override(ERC1155, ERC1155Supply)
     {
-        Prescription memory prescription = _prescriptions[prescriptionId];
-        return (
-            prescription.name,
-            prescription.description,
-            prescription.doctor,
-            prescription.patient,
-            prescription.date,
-            prescription.approved
-        );
-    }
-
-    function isPrescriptionBurnt(uint256 prescriptionId) public view returns (boolean) {
-        return _exists(prescriptionId);
+        super._update(from, to, ids, values);
     }
 }
