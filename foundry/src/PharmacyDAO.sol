@@ -3,40 +3,47 @@ pragma solidity ^0.8.24;
 
 import "./Prescription.sol";
 
+/**
+    @title PharmacyDAO
+    @notice Esse contrato gerencia receitas/prescrições médicas, usando o contrato Prescription como token ERC1155.
+    A gerência é feita de seguinte maneira em que o dono do contrato é o dono da farmácia, que pode adicionar e remover médicos e farmacêuticos.
+    Os médicos podem propor prescrições e os farmacêuticos podem aprovar ou rejeitar prescrições.
+    Quando uma prescrição é proposta, ela é "mintada" usando o contrato Prescription e seu estado é definido como PENDING.
+    Os farmacêuticos podem aprovar ou rejeitar a prescrição, alterando seu estado para APPROVED ou REJECTED, respectivamente.
+    Os farmacêuticos podem queimar o token da prescrição.
+    @author Pedro Leale
+    @author Pedro Henrique Rossetto Natal
+    @author Valter Fellype Ferreira Netto
+*/
+
 contract PharmacyDAO {
     enum Roles {
         NONE,
         DOCTOR,
-        PHARMACIST
+        PHARMACIST,
+        OWNER
     }
 
-    struct PrescriptionProposal {
-        address patient;
-        address doctor;
-        string medication;
-        string dosage;
-    }
-
-    uint256 private _currentProposalID = 0;
     string public pharmacyIdentifier;
     Prescription public prescriptionToken;
+    address public owner;
     mapping (uint256 => PrescriptionProposal) public prescriptions;
     mapping(address => Roles) public doctors;
     mapping(address => Roles) public pharmacists;
 
     modifier OnlyDoctor() {
-        require(doctors[msg.sender] == Roles.DOCTOR, "Caller is not a doctor");
+        require(doctors[msg.sender] == Roles.DOCTOR || owner == msg.sender, "Caller is not a doctor");
         _;
     }
 
     modifier OnlyPharmacist() {
-        require(pharmacists[msg.sender] == Roles.PHARMACIST, "Caller is not a pharmacist");
+        require(pharmacists[msg.sender] == Roles.PHARMACIST || owner == msg.sender, "Caller is not a pharmacist");
         _;
     }
 
     constructor (string memory _pharmacyIdentifier) {
         pharmacyIdentifier = _pharmacyIdentifier;
-        pharmacists[msg.sender] = Roles.PHARMACIST;
+        owner = msg.sender;
     }
 
     function addDoctor(address doctor) public OnlyPharmacist() {
@@ -47,23 +54,40 @@ contract PharmacyDAO {
         pharmacists[pharmacist] = Roles.PHARMACIST;
     }
 
-    function proposePrescription(
-        address patient,
-        string memory medication,
-        string memory dosage
-    ) public OnlyDoctor {
-        _currentProposalID++;
-        prescriptions[_currentProposalID] = PrescriptionProposal(patient, msg.sender, medication, dosage);
+    function removeDoctor(address doctor) public OnlyPharmacist() {
+        doctors[doctor] = Roles.NONE;
     }
 
-    function approvePrescription(uint256 proposalID, string memory uri, bytes memory data) public OnlyPharmacist() {
-        // Approve prescription and mint NFT using Prescription contract
-        PrescriptionProposal memory proposal = prescriptions[proposalID];
-        prescriptionToken.mint(uri, 1, proposal.patient, data);
+    function removePharmacist(address pharmacist) public OnlyOwner() {
+        pharmacists[pharmacist] = Roles.NONE;
     }
 
-    function burnPrescription() public OnlyPharmacist() {
-        // Dispense prescription, burn it
+    /**
+    @param uri URI da prescrição
+    @param amount Quantidade de tokens a serem mintados
+    @param patient Paciente que receberá a prescrição
+    @param data Conteúdo da prescrição
+    @return id ID da prescrição mintada
+    */
+    function proposePrescription(string memory uri, uint256 amount, address patient, bytes memory data) public OnlyDoctor() returns (uint256) {
+        uint256 id = prescriptionToken.mint(uri, amount, patient, data);
+        return id;
+    }
+
+    function approvePrescription(uint256 id) public OnlyPharmacist() {
+        prescriptionToken.approvePrescription(id);
+    }
+
+    function rejectPrescription(uint256 id) public OnlyPharmacist() {
+        prescriptionToken.rejectPrescription(id);
+    }
+
+    function burnPrescription(address patient, uint256 id) public OnlyPharmacist() {
+        prescriptionToken.burn(patient, id);
+    }
+
+    function setPrescriptionURI(string memory newuri) public OnlyPharmacist() {
+        prescriptionToken.setURI(newuri);
     }
 
 }
