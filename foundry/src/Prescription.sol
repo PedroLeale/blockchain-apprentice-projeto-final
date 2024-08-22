@@ -5,10 +5,12 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Prescription is ERC1155, Ownable {
+    uint256 private _currentTokenID = 0;
+
     constructor(address pharmacyDAO) ERC1155("") Ownable(pharmacyDAO) {}
 
-    event Minted(address patient, uint256 id);
-    event Burned(address patient, uint256 id);
+    event Minted(address indexed patient, uint256 id);
+    event Burned(address indexed patient, uint256 id);
 
     function mint(
         string memory uri,
@@ -19,21 +21,13 @@ contract Prescription is ERC1155, Ownable {
         _currentTokenID++;
         uint256 newItemId = _currentTokenID;
 
-        _mint(msg.sender, newItemId, amount, data);
+        _mint(patient, newItemId, amount, data);
+        _setURI(uri);
         emit Minted(patient, newItemId);
         return newItemId;
     }
 
     function setURI(string memory newuri) public onlyOwner {
         _setURI(newuri);
-    }
-
-    function burn(
-        address patient,
-        uint256 id,
-        uint256 value
-    ) public onlyOwner {
-       _burn(patient, id, value);
-        emit Burned(patient, id);
     }
 }
