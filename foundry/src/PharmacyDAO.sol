@@ -27,7 +27,6 @@ contract PharmacyDAO {
     string public pharmacyIdentifier;
     Prescription public prescriptionToken;
     address public owner;
-    mapping (uint256 => PrescriptionProposal) public prescriptions;
     mapping(address => Roles) public doctors;
     mapping(address => Roles) public pharmacists;
 
@@ -38,6 +37,11 @@ contract PharmacyDAO {
 
     modifier OnlyPharmacist() {
         require(pharmacists[msg.sender] == Roles.PHARMACIST || owner == msg.sender, "Caller is not a pharmacist");
+        _;
+    }
+
+    modifier OnlyOwner() {
+        require(owner == msg.sender, "Caller is not the owner");
         _;
     }
 
@@ -63,14 +67,13 @@ contract PharmacyDAO {
     }
 
     /**
-    @param uri URI da prescrição
     @param amount Quantidade de tokens a serem mintados
     @param patient Paciente que receberá a prescrição
-    @param data Conteúdo da prescrição
+    @param uri URI da prescrição
     @return id ID da prescrição mintada
     */
-    function proposePrescription(string memory uri, uint256 amount, address patient, bytes memory data) public OnlyDoctor() returns (uint256) {
-        uint256 id = prescriptionToken.mint(uri, amount, patient, data);
+    function proposePrescription(uint256 amount, address patient, bytes memory uri) public OnlyDoctor() returns (uint256) {
+        uint256 id = prescriptionToken.mint(amount, patient, uri);
         return id;
     }
 
@@ -84,10 +87,6 @@ contract PharmacyDAO {
 
     function burnPrescription(address patient, uint256 id) public OnlyPharmacist() {
         prescriptionToken.burn(patient, id);
-    }
-
-    function setPrescriptionURI(string memory newuri) public OnlyPharmacist() {
-        prescriptionToken.setURI(newuri);
     }
 
 }

@@ -22,6 +22,7 @@ contract Prescription is ERC1155, Ownable {
     }
 
     mapping (uint256 => PrescriptionState) public prescriptionState;
+    mapping (uint256 => bytes ) public prescriptionURI;
 
     constructor(address pharmacyDAO) ERC1155("") Ownable(pharmacyDAO) {}
 
@@ -31,17 +32,15 @@ contract Prescription is ERC1155, Ownable {
     event PrescriptionRejected(uint256 indexed id);
 
     function mint(
-        string memory uri,
         uint256 amount,
         address patient,
-        bytes memory data
+        bytes memory uri
     ) public onlyOwner returns (uint256) {
         _currentTokenID++;
         uint256 newItemId = _currentTokenID;
 
-        _mint(patient, newItemId, amount, data);
+        _mint(patient, newItemId, amount, uri);
         prescriptionState[newItemId] = PrescriptionState.PENDING;
-        _setURI(uri);
         emit Minted(patient, newItemId);
         return newItemId;
     }
@@ -61,9 +60,5 @@ contract Prescription is ERC1155, Ownable {
     function burn(address patient, uint256 id) public onlyOwner {
         _burn(patient, id, 1);
         emit Burned(patient, id);
-    }
-
-    function setURI(string memory newuri) public onlyOwner {
-        _setURI(newuri);
     }
 }
