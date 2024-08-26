@@ -13,7 +13,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 */
 
 contract Prescription is ERC1155, Ownable {
-    uint256 private _currentTokenID = 0;
 
     enum PrescriptionState {
         PENDING,
@@ -31,13 +30,20 @@ contract Prescription is ERC1155, Ownable {
     event PrescriptionApproved(uint256 indexed id);
     event PrescriptionRejected(uint256 indexed id);
 
+
+   /**
+   * @param uri ipfs content id
+   * @dev Essa função recebe o cid do ipfs e faz um mapeamento
+   * dele para um valor de keccak256 dentro do contrato. Usamos uma conversão
+   * de uma hash de bytes32 para um inteiro para manter a compatibilidade
+   * com o padrão ERC1155 além de permitir a checagem de valores já !"mintados".
+   */
     function mint(
         uint256 amount,
         address patient,
         bytes memory uri
     ) public onlyOwner returns (uint256) {
-        _currentTokenID++;
-        uint256 newItemId = _currentTokenID;
+        uint256 newItemId = uint256(keccak256(abi.encodePacked(uri)));
 
         _mint(patient, newItemId, amount, uri);
         prescriptionState[newItemId] = PrescriptionState.PENDING;
