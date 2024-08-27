@@ -13,58 +13,64 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 */
 
 contract Prescription is ERC1155, Ownable {
+    uint256 private _currentTokenID = 0;
 
     enum PrescriptionState {
         PENDING,
         APPROVED,
-        REJECTED
+        DELIVERED
     }
 
     mapping (uint256 => PrescriptionState) public prescriptionState;
-    mapping (uint256 => bytes ) public prescriptionURI;
 
     constructor(address pharmacyDAO) ERC1155("") Ownable(pharmacyDAO) {}
 
-    event Minted(address indexed patient, uint256 id);
-    event Burned(address indexed patient, uint256 id);
-    event PrescriptionApproved(uint256 indexed id);
-    event PrescriptionRejected(uint256 indexed id);
-
+    event Minted(uint256 indexed id, uint256 amount, uint256 timestamp);
+    event Burned(uint256 indexed id, uint256 amount, uint256 timestamp);
+    event PrescriptionApproved(uint256 indexed id, uint256 timestamp);
+    event PrescriptionRejected(uint256 indexed id, uint256 timestamp);
+    event PrescriptionDelivered(uint256 indexed id, uint256 timestamp);
 
    /**
-   * @param uri ipfs content id
-   * @dev Essa função recebe o cid do ipfs e faz um mapeamento
-   * dele para um valor de keccak256 dentro do contrato. Usamos uma conversão
-   * de uma hash de bytes32 para um inteiro para manter a compatibilidade
-   * com o padrão ERC1155 além de permitir a checagem de valores já !"mintados".
+   * @param cid ipfs content identifier
    */
     function mint(
         uint256 amount,
-        address patient,
-        bytes memory uri
+        bytes memory cid
     ) public onlyOwner returns (uint256) {
-        uint256 newItemId = uint256(keccak256(abi.encodePacked(uri)));
+        _currentTokenID++;
+        uint256 newItemId = _currentTokenID;
 
-        _mint(patient, newItemId, amount, uri);
+        _mint(owner(), newItemId, amount, cid);
         prescriptionState[newItemId] = PrescriptionState.PENDING;
-        emit Minted(patient, newItemId);
+        emit Minted(newItemId, amount, block.timestamp);
         return newItemId;
+    }
+
+    function burn(uint256 id, uint256 amount) public onlyOwner {
+        _burn(owner(), id, amount);
+        emit Burned(id, amount, block.timestamp);
     }
 
     function approvePrescription(uint256 id) public onlyOwner {
         require(prescriptionState[id] == PrescriptionState.PENDING, "Prescription is not pending");
         prescriptionState[id] = PrescriptionState.APPROVED;
-        emit PrescriptionApproved(id);
+        emit PrescriptionApproved(id, block.timestamp);
     }
 
-    function rejectPrescription(uint256 id) public onlyOwner {
+    function rejectPrescription(address patient, uint256 id) public onlyOwner {
         require(prescriptionState[id] == PrescriptionState.PENDING, "Prescription is not pending");
-        prescriptionState[id] = PrescriptionState.REJECTED;
-        emit PrescriptionRejected(id);
+        _safeTransferFrom(patient, owner(), id, 1, "");
+        emit PrescriptionRejected(id, block.timestamp);
     }
 
-    function burn(address patient, uint256 id) public onlyOwner {
-        _burn(patient, id, 1);
-        emit Burned(patient, id);
+    function deliverPrescription(uint256 id) public onlyOwner {
+        require(prescriptionState[id] == PrescriptionState.APPROVED, "Prescription is not approved");
+        prescriptionState[id] = PrescriptionState.DELIVERED;
+        emit PrescriptionDelivered(id, block.timestamp);
+    }
+
+    function checkPrescriptionState(uint256 id) public view returns (PrescriptionState) {
+        return prescriptionState[id];
     }
 }
