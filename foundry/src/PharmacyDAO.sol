@@ -60,6 +60,10 @@ contract PharmacyDAO is ERC1155Holder {
         owner = msg.sender;
     }
 
+    function setPrescriptionToken(address _prescriptionToken) public OnlyOwner() {
+        prescriptionToken = Prescription(_prescriptionToken);
+    }
+
     function addDoctor(address doctor) public OnlyPharmacist() {
         doctors[doctor] = Roles.DOCTOR;
         emit DoctorAdded(doctor, block.timestamp);
@@ -95,7 +99,7 @@ contract PharmacyDAO is ERC1155Holder {
     * @dev Ao propor uma prescrição para o paciente, o token é transferido para seu endereço
     * no estado PENDING.
     */
-    function proposePrescription( address patient, uint256 id, uint256 amount, bytes memory data) public OnlyDoctor() {
+    function proposePrescription(address patient, uint256 id, uint256 amount, bytes memory data) public OnlyDoctor() {
         prescriptionToken.safeTransferFrom(address(this), patient, id, amount, data);
         emit PrescriptionProposed(id, block.timestamp);
     }
@@ -113,11 +117,12 @@ contract PharmacyDAO is ERC1155Holder {
     /**
     * @param patient Paciente que teve a prescrição rejeitada
     * @param id ID da prescrição a ser rejeitada
+    * @param amount Quantidade de tokens a serem rejeitados
     * @dev Rejeita uma prescrição, transferindo o token de volta para o estoque/este contrato.
     * Pode ser chamada caso tenha uma incoerência na prescrição ou caso o estoque físico do remédio tenha acabado.
     */
-    function rejectPrescription(address patient, uint256 id) public OnlyPharmacist() {
-        prescriptionToken.rejectPrescription(patient, id);
+    function rejectPrescription(address patient, uint256 id, uint256 amount) public OnlyPharmacist() {
+        prescriptionToken.rejectPrescription(patient, id, amount);
     }
 
     /**

@@ -28,7 +28,7 @@ contract Prescription is ERC1155, Ownable {
     event Minted(uint256 indexed id, uint256 amount, uint256 timestamp);
     event Burned(uint256 indexed id, uint256 amount, uint256 timestamp);
     event PrescriptionApproved(uint256 indexed id, uint256 timestamp);
-    event PrescriptionRejected(uint256 indexed id, uint256 timestamp);
+    event PrescriptionRejected(uint256 indexed id, uint256 amount, uint256 timestamp);
     event PrescriptionDelivered(uint256 indexed id, uint256 timestamp);
 
    /**
@@ -58,10 +58,10 @@ contract Prescription is ERC1155, Ownable {
         emit PrescriptionApproved(id, block.timestamp);
     }
 
-    function rejectPrescription(address patient, uint256 id) public onlyOwner {
+    function rejectPrescription(address patient, uint256 id, uint256 amount) public onlyOwner {
         require(prescriptionState[id] == PrescriptionState.PENDING, "Prescription is not pending");
-        _safeTransferFrom(patient, owner(), id, 1, "");
-        emit PrescriptionRejected(id, block.timestamp);
+        _safeTransferFrom(patient, owner(), id, amount, "");
+        emit PrescriptionRejected(id, amount, block.timestamp);
     }
 
     function deliverPrescription(uint256 id) public onlyOwner {
