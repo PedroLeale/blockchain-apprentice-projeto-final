@@ -102,7 +102,6 @@ contract PharmacyDAO is ERC1155Holder {
     function proposePrescription(address patient, uint256 id, uint256 amount, bytes memory data) public OnlyDoctor() {
         prescriptionToken.safeTransferFrom(address(this), patient, id, amount, data);
         emit PrescriptionProposed(patient, id, block.timestamp);
-
     }
 
     /**

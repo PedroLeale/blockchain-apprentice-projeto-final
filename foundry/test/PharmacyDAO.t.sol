@@ -14,10 +14,6 @@ contract PharmacyTest is Test {
     address patient = address(0x4);
 
     function setUp() public {
-        vm.deal(pharmacyOwner, 100 ether);
-        vm.deal(doctor, 100 ether);
-        vm.deal(pharmacist, 100 ether);
-        vm.deal(patient, 100 ether);
         vm.startPrank(pharmacyOwner);
         pharmacyDAO = new PharmacyDAO("CryptoPharma");
         prescription = new Prescription(address(pharmacyDAO));
@@ -49,28 +45,26 @@ contract PharmacyTest is Test {
     }
 
     function testProposal() public {
-    vm.prank(pharmacist);
-    pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
+        vm.prank(pharmacist);
+        pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
 
-    vm.startPrank(doctor);
-    
-    vm.expectEmit(true, true, true, true);
-    emit PrescriptionProposed(patient, 1, block.timestamp);
-    
-    pharmacyDAO.proposePrescription(patient, 1, 50, bytes("aaa"));
-    
-    uint256 contractBalance = prescription.balanceOf(address(pharmacyDAO), 1);
-    assertEq(contractBalance, 50, "Contract balance is not 50");
-    uint256 patientBalance = prescription.balanceOf(patient, 1);
-    assertEq(patientBalance, 50, "Patient balance is not 50");
+        vm.startPrank(doctor);
 
-    Prescription.PrescriptionState state = prescription.prescriptionState(1);
-    assertEq(uint(state), 0, "Prescription state is not PENDING");
+        vm.expectEmit(true, true, true, true);
+        emit PharmacyDAO.PrescriptionProposed(patient, 1, block.timestamp);
 
-    vm.stopPrank(); // Mova isso para o final do teste
-}
+        pharmacyDAO.proposePrescription(patient, 1, 50, bytes("aaa"));
 
+        uint256 contractBalance = prescription.balanceOf(address(pharmacyDAO), 1);
+        assertEq(contractBalance, 50, "Contract balance is not 50");
+        uint256 patientBalance = prescription.balanceOf(patient, 1);
+        assertEq(patientBalance, 50, "Patient balance is not 50");
 
+        Prescription.PrescriptionState state = prescription.prescriptionState(1);
+        assertEq(uint(state), 0, "Prescription state is not PENDING");
+
+        vm.stopPrank();
+    }
 
     function testApprovalAndDeliverance() public {
         vm.prank(pharmacist);
