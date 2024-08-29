@@ -38,7 +38,7 @@ contract PharmacyDAO is ERC1155Holder {
     event PharmacistAdded(address pharmacist, uint256 timestamp);
     event DoctorRemoved(address doctor, uint256 timestamp);
     event PharmacistRemoved(address pharmacist, uint256 timestamp);
-    event PrescriptionProposed(uint256 id, uint256 timestamp);
+    event PrescriptionProposed(address patient, uint256 id, uint256 timestamp);
 
     modifier OnlyDoctor() {
         require(doctors[msg.sender] == Roles.DOCTOR || owner == msg.sender, "Caller is not a doctor");
@@ -101,7 +101,7 @@ contract PharmacyDAO is ERC1155Holder {
     */
     function proposePrescription(address patient, uint256 id, uint256 amount, bytes memory data) public OnlyDoctor() {
         prescriptionToken.safeTransferFrom(address(this), patient, id, amount, data);
-        emit PrescriptionProposed(id, block.timestamp);
+        emit PrescriptionProposed(patient, id, block.timestamp);
     }
 
     /**

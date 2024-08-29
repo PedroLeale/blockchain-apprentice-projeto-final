@@ -14,10 +14,6 @@ contract PharmacyTest is Test {
     address patient = address(0x4);
 
     function setUp() public {
-        vm.deal(pharmacyOwner, 100 ether);
-        vm.deal(doctor, 100 ether);
-        vm.deal(pharmacist, 100 ether);
-        vm.deal(patient, 100 ether);
         vm.startPrank(pharmacyOwner);
         pharmacyDAO = new PharmacyDAO("CryptoPharma");
         prescription = new Prescription(address(pharmacyDAO));
@@ -53,8 +49,12 @@ contract PharmacyTest is Test {
         pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
 
         vm.startPrank(doctor);
+
+        vm.expectEmit(true, true, true, true);
+        emit PharmacyDAO.PrescriptionProposed(patient, 1, block.timestamp);
+
         pharmacyDAO.proposePrescription(patient, 1, 50, bytes("aaa"));
-        
+
         uint256 contractBalance = prescription.balanceOf(address(pharmacyDAO), 1);
         assertEq(contractBalance, 50, "Contract balance is not 50");
         uint256 patientBalance = prescription.balanceOf(patient, 1);
