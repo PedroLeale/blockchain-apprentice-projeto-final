@@ -49,22 +49,28 @@ contract PharmacyTest is Test {
     }
 
     function testProposal() public {
-        vm.prank(pharmacist);
-        pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
+    vm.prank(pharmacist);
+    pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
 
-        vm.startPrank(doctor);
-        pharmacyDAO.proposePrescription(patient, 1, 50, bytes("aaa"));
-        
-        uint256 contractBalance = prescription.balanceOf(address(pharmacyDAO), 1);
-        assertEq(contractBalance, 50, "Contract balance is not 50");
-        uint256 patientBalance = prescription.balanceOf(patient, 1);
-        assertEq(patientBalance, 50, "Patient balance is not 50");
+    vm.startPrank(doctor);
+    
+    vm.expectEmit(true, true, true, true);
+    emit PrescriptionProposed(patient, 1, block.timestamp);
+    
+    pharmacyDAO.proposePrescription(patient, 1, 50, bytes("aaa"));
+    
+    uint256 contractBalance = prescription.balanceOf(address(pharmacyDAO), 1);
+    assertEq(contractBalance, 50, "Contract balance is not 50");
+    uint256 patientBalance = prescription.balanceOf(patient, 1);
+    assertEq(patientBalance, 50, "Patient balance is not 50");
 
-        Prescription.PrescriptionState state = prescription.prescriptionState(1);
-        assertEq(uint(state), 0, "Prescription state is not PENDING");
+    Prescription.PrescriptionState state = prescription.prescriptionState(1);
+    assertEq(uint(state), 0, "Prescription state is not PENDING");
 
-        vm.stopPrank();
-    }
+    vm.stopPrank(); // Mova isso para o final do teste
+}
+
+
 
     function testApprovalAndDeliverance() public {
         vm.prank(pharmacist);
