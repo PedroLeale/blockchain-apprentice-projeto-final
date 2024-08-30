@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Doctor from './pages/Doctor/doctor'; // ajuste aqui
+import Pharmacist from './pages/Pharmacist/pharmacist'; // ajuste aqui
+import Owner from './pages/Owner/owner'; // ajuste aqui
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path="/doctor" element={<Doctor />} />
+          <Route path="/pharmacist" element={<Pharmacist />} />
+          <Route path="/owner" element={<Owner />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
