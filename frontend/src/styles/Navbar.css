@@ -15,10 +15,13 @@
 }
 
 .navbar a {
-  color: white;
+  color: black;
   text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease; /* Adiciona uma transição suave */
 }
 
 .navbar a:hover {
+  color: #1e90ff; 
   text-decoration: underline;
+  transform: scale(2.2); 
 }
