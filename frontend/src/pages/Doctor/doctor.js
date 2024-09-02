@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProposePrescription } from "../../contracts/contractInteraction"; // Verifique se esta função está exportada corretamente
+import { proposePrescription } from "../../contracts/contractInteraction";
 import { useContract } from "../../hooks/useContract";
 
 const Doctor = () => {
@@ -13,7 +13,7 @@ const Doctor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await ProposePrescription(provider, patient, id, amount, data);
+      await proposePrescription(provider, patient, id, amount, data);
       alert("Prescription proposed successfully!");
     } catch (error) {
       alert("Error proposing prescription");
@@ -41,12 +41,6 @@ const Doctor = () => {
           placeholder="Amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Data"
-          value={data}
-          onChange={(e) => setData(e.target.value)}
         />
         <button type="submit">Propose Prescription</button>
       </form>

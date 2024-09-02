@@ -1,10 +1,9 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Doctor from './pages/Doctor/doctor'; // ajuste aqui
-import Pharmacist from './pages/Pharmacist/pharmacist'; // ajuste aqui
-import Owner from './pages/Owner/owner'; // ajuste aqui
+import Doctor from './pages/Doctor/doctor';
+import Pharmacist from './pages/Pharmacist/pharmacist';
+import Owner from './pages/Owner/owner';
 
 function App() {
   return (

@@ -1,0 +1,20 @@
+/* src/styles/Button.css */
+.btn {
+    background-color: #add8e6; /* Light blue background */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+  }
+  
+.btn:hover {
+    background-color: #87ceeb; /* Slightly darker light blue */
+  }
+  
+.btn:active {
+    background-color: #6495ed; /* Even darker blue for active state */
+  }
