@@ -1,7 +1,15 @@
 import React from 'react';
+import AddPharmacist from '../../components/addPharmacist';
+import RemovePharmacist from '../../components/removePharmacist';
 
 const owner = () => {
-  return <h1>Owner Page</h1>;
+  return (<div>
+    <h1>Owner Page</h1>
+    <AddPharmacist />;
+
+
+  </div>
+  );
 };
 
 export default owner;
