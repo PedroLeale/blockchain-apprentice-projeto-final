@@ -12,7 +12,7 @@ const MintPrescriptionForm = () => {
     patient: { address: '' },
     doctor: { address: '', licenseNumber: '' },
     amount: 0,
-    medication: [{ name: '', dosage: '', frequency: '', duration: ''}],
+    medication: [{ name: '', dosage: '', frequency: '', duration: '' }],
     issueDate: '',
     expiryDate: '',
     notes: ''
