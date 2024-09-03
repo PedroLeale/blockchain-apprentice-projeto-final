@@ -12,6 +12,7 @@ const AddPharmacist = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      alert("Adding pharmacist..." + pharmacistAddress);
       await addPharmacist(provider, pharmacistAddress);
       alert('Pharmacist added successfully!');
     } catch (error) {
