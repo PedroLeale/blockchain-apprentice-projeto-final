@@ -9,10 +9,9 @@ const MintPrescriptionForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [prescription, setPrescription] = useState({
     prescriptionId: '',
-    patient: { address: '' },
     doctor: { address: '', licenseNumber: '' },
     amount: 0,
-    medication: [{ name: '', dosage: '', frequency: '', duration: ''}],
+    medication: [{ name: '', dosage: '', frequency: '', duration: '' }],
     issueDate: '',
     expiryDate: '',
     notes: ''
@@ -94,13 +93,6 @@ const MintPrescriptionForm = () => {
             name="prescriptionId"
             placeholder="Prescription ID"
             value={prescription.prescriptionId}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="patient.address"
-            placeholder="Patient Address"
-            value={prescription.patient.address}
             onChange={handleInputChange}
           />
           <input
