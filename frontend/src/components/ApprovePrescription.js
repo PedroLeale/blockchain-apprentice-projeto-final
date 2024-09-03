@@ -7,12 +7,12 @@ const ApprovePrescription = () => {
     const [prescriptionId, setPrescriptionId] = useState('');
     const [showForm, setShowForm] = useState(false);
 
-    const provider = useContract();
+    const {signer} = useContract();
 
     const handleApprove = async (e) => {
         e.preventDefault();
         try {
-            await approvePrescription(provider, prescriptionId);
+            await approvePrescription(signer, prescriptionId);
             alert('Prescription approved successfully!');
         } catch (error) {
             alert('Error approving prescription');

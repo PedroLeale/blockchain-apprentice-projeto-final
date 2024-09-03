@@ -8,12 +8,12 @@ const PrescriptionForm = () => {
     const [id, setId] = useState("");
     const [amount, setAmount] = useState("");
 
-    const provider = useContract();
+    const {signer} = useContract();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await proposePrescription(provider, patient, id, amount);
+            await proposePrescription(signer, patient, id, amount);
             alert("Prescription proposed successfully!");
         } catch (error) {
             alert("Error proposing prescription");

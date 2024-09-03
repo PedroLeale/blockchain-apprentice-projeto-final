@@ -17,7 +17,7 @@ const MintPrescriptionForm = () => {
     notes: ''
   });
 
-  const provider = useContract();
+  const {signer} = useContract();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -76,7 +76,7 @@ const MintPrescriptionForm = () => {
       const prescriptionId = data.Key;
 
       // Call mintPrescriptionTokens with the prescription ID
-      await mintPrescriptionTokens(provider, prescription.amount, prescriptionId);
+      await mintPrescriptionTokens(signer, prescription.amount, prescriptionId);
       alert('Prescription(s) minted successfully!');
     } catch (error) {
       alert('Error minting prescription(s)');

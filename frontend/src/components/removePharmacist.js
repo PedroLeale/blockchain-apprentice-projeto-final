@@ -7,12 +7,12 @@ const RemovePharmacist = () => {
     const [pharmacistAddress, setPharmacistAddress] = useState('');
     const [showForm, setShowForm] = useState(false);
 
-    const provider = useContract();
+    const {signer} = useContract();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await removePharmacist(provider, pharmacistAddress);
+            await removePharmacist(signer, pharmacistAddress);
             alert('Pharmacist removed successfully!');
         } catch (error) {
             alert('Error removing pharmacist');

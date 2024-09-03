@@ -9,12 +9,12 @@ const RejectPrescription = () => {
     const [amount, setAmount] = useState('');
     const [showForm, setShowForm] = useState(false);
 
-    const provider = useContract();
+    const {signer} = useContract();
 
     const handleReject = async (e) => {
         e.preventDefault();
         try {
-            await rejectPrescription(provider, patient, id, amount);
+            await rejectPrescription(signer, patient, id, amount);
             alert('Prescription rejected successfully!');
         } catch (error) {
             alert('Error rejecting prescription');

@@ -7,12 +7,12 @@ const ManageDoctor = () => {
     const [doctor, setDoctor] = useState('');
     const [showForm, setShowForm] = useState(false);
 
-    const provider = useContract();
+    const {signer} = useContract();
 
     const handleAddDoctor = async (e) => {
         e.preventDefault();
         try {
-            await addDoctor(provider, doctor);
+            await addDoctor(signer, doctor);
             alert('Doctor added successfully!');
         } catch (error) {
             alert('Error adding doctor');
@@ -22,7 +22,7 @@ const ManageDoctor = () => {
     const handleRemoveDoctor = async (e) => {
         e.preventDefault();
         try {
-            await removeDoctor(provider, doctor);
+            await removeDoctor(signer, doctor);
             alert('Doctor removed successfully!');
         } catch (error) {
             alert('Error removing doctor');

@@ -8,12 +8,12 @@ const BurnPrescription = () => {
     const [amount, setAmount] = useState('');
     const [showForm, setShowForm] = useState(false);
 
-    const provider = useContract();
+    const {signer} = useContract();
 
     const handleBurn = async (e) => {
         e.preventDefault();
         try {
-            await burnPrescription(provider, prescriptionId, amount);
+            await burnPrescription(signer, prescriptionId, amount);
             alert('Prescription burned successfully!');
         } catch (error) {
             alert('Error burning prescription');

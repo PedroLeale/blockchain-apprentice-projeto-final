@@ -7,12 +7,12 @@ const DeliverPrescription = () => {
     const [prescriptionId, setPrescriptionId] = useState('');
     const [showForm, setShowForm] = useState(false);
 
-    const provider = useContract();
+    const {signer} = useContract();
 
     const handleDeliver = async (e) => {
         e.preventDefault();
         try {
-            await deliverPrescription(provider, prescriptionId);
+            await deliverPrescription(signer, prescriptionId);
             alert('Prescription delivered successfully!');
         } catch (error) {
             alert('Error delivering prescription');
