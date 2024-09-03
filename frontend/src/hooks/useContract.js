@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 
 export const useContract = () => {
   const [provider, setProvider] = useState(null);
+  const [signer, setSigner] = useState(null);
 
   useEffect(() => {
     const initProvider = async () => {
@@ -14,10 +15,12 @@ export const useContract = () => {
         const _provider = new ethers.BrowserProvider(window.ethereum);
         await _provider.send("eth_requestAccounts", []);
         setProvider(_provider);
+        const _signer = _provider.getSigner();
+        setSigner(_signer);
       }
     };
     initProvider();
   }, []);
 
-  return provider;
+  return { provider, signer };
 };

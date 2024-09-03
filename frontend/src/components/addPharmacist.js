@@ -7,16 +7,15 @@ const AddPharmacist = () => {
   const [pharmacistAddress, setPharmacistAddress] = useState('');
   const [showForm, setShowForm] = useState(false);
 
-  const provider = useContract();
+  const {signer} = useContract();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      alert("Adding pharmacist..." + pharmacistAddress);
-      await addPharmacist(provider, pharmacistAddress);
+      await addPharmacist(signer, pharmacistAddress);
       alert('Pharmacist added successfully!');
     } catch (error) {
-      alert('Error adding pharmacist');
+      alert('Error adding pharmacist: ' + error);
     }
   };
 
