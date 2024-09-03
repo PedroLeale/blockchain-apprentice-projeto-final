@@ -12,9 +12,9 @@
   }
   
 .btn:hover {
-    background-color: #87ceeb; /* Slightly darker light blue */
+    background-color: #87ceeb; 
   }
   
 .btn:active {
-    background-color: #6495ed; /* Even darker blue for active state */
+    background-color: #6495ed; 
   }
