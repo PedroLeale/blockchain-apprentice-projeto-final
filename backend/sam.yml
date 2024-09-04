@@ -31,17 +31,17 @@ Resources:
       Environment:
         Variables:
           STAGE: !Ref StageName
+          S3_BUCKET_NAME: "blockchain-apprentice-crypto-pharmacy"
       Policies:
         - AWSLambdaBasicExecutionRole
-#        - Version: '2012-10-17'
-#          Statement:
-#            - Effect: Allow
-#              Action: 
-#                - "s3:GetObject"
-#              Resource: !Sub 
-#                - '${BucketArn}/*'
-#                - BucketArn: !ImportValue 
-#                    'Fn::Sub': '${AppName}-S3ConfigBucketArn'
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action: 
+                - "s3:GetObject"
+                - "s3:PutObject"
+                - "s3:ListBucket"
+              Resource: "*" # TODO: restrict to the bucket
       Events:
         ApiEventAdmin:
           Type: HttpApi

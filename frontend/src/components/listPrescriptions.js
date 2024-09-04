@@ -7,7 +7,7 @@ const ListPrescriptions = () => {
     useEffect(() => {
         const fetchPrescriptions = async () => {
             try {
-                const response = await axios.get(`${process.env.STAGE}/app/list-prescriptions`);
+                const response = await axios.get(`${process.env.BACKEND_URL}/list-prescriptions`);
                 setFiles(response.data);
             } catch (error) {
                 console.error(error);
