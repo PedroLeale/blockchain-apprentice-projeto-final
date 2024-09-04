@@ -1,34 +1,34 @@
-import AWS from 'aws-sdk';
-import React, { useState } from 'react';
-import Button from './Button';
-import { mintPrescriptionTokens } from '../contracts/contractInteraction';
-import { useContract } from '../hooks/useContract';
-import '../styles/Button.css';
+import React, { useState } from "react";
+import Button from "./Button";
+import axios from "axios";
+import { mintPrescriptionTokens } from "../contracts/contractInteraction";
+import { useContract } from "../hooks/useContract";
+import "../styles/Button.css";
 
 const MintPrescriptionForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [prescription, setPrescription] = useState({
-    prescriptionId: '',
-    doctor: { address: '', licenseNumber: '' },
+    prescriptionId: "",
+    doctor: { address: "", licenseNumber: "" },
     amount: 0,
-    medication: [{ name: '', dosage: '', frequency: '', duration: '' }],
-    issueDate: '',
-    expiryDate: '',
-    notes: ''
+    medication: [{ name: "", dosage: "", frequency: "", duration: "" }],
+    issueDate: "",
+    expiryDate: "",
+    notes: "",
   });
 
-  const {signer} = useContract();
+  const { signer } = useContract();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const keys = name.split('.');
+    const keys = name.split(".");
     if (keys.length === 1) {
       setPrescription({ ...prescription, [name]: value });
     } else {
       const [parent, child] = keys;
       setPrescription({
         ...prescription,
-        [parent]: { ...prescription[parent], [child]: value }
+        [parent]: { ...prescription[parent], [child]: value },
       });
     }
   };
@@ -43,7 +43,10 @@ const MintPrescriptionForm = () => {
   const addMedication = () => {
     setPrescription({
       ...prescription,
-      medication: [...prescription.medication, { name: '', dosage: '', frequency: '', duration: '' }]
+      medication: [
+        ...prescription.medication,
+        { name: "", dosage: "", frequency: "", duration: "" },
+      ],
     });
   };
 
@@ -55,31 +58,34 @@ const MintPrescriptionForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Configure AWS SDK
-    AWS.config.update({
-      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-      region: process.env.REACT_APP_AWS_REGION,
-    });
-
-    const s3 = new AWS.S3();
-    const params = {
-      Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
-      Key: `prescriptions/${Date.now()}.json`,
-      Body: JSON.stringify(prescription),
-      ContentType: 'application/json',
-    };
-
     try {
-      // Upload prescription JSON to S3
-      const data = await s3.upload(params).promise();
-      const prescriptionId = data.Key;
+      // Fetch pre-signed URL
+      const response = await axios.put(
+        `/${process.env.REACT_APP_STAGE}/app/mint-prescription`,
+        {
+          params: {
+            key: `prescriptions/${Date.now()}.json`,
+            expires: 300, // URL expiration time in seconds
+          },
+        }
+      );
+      const presignedUrl = response.data.url;
+
+      // Upload prescription JSON to S3 using the pre-signed URL
+      await axios.put(presignedUrl, JSON.stringify(prescription), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      // Extract the prescription ID from the pre-signed URL
+      const prescriptionId = new URL(presignedUrl).pathname.split("/").pop();
 
       // Call mintPrescriptionTokens with the prescription ID
       await mintPrescriptionTokens(signer, prescription.amount, prescriptionId);
-      alert('Prescription(s) minted successfully!');
+      alert("Prescription" + prescriptionId + "minted successfully!");
     } catch (error) {
-      alert('Error minting prescription(s)');
+      alert("Error minting prescription: " + error);
     }
   };
 
@@ -147,11 +153,15 @@ const MintPrescriptionForm = () => {
                 onChange={(e) => handleMedicationChange(index, e)}
               />
               {prescription.medication.length > 1 && (
-                <button type="button" onClick={() => removeMedication(index)}>Remove Medication</button>
+                <button type="button" onClick={() => removeMedication(index)}>
+                  Remove Medication
+                </button>
               )}
             </div>
           ))}
-          <button type="button" onClick={addMedication}>Add Medication</button>
+          <button type="button" onClick={addMedication}>
+            Add Medication
+          </button>
           <input
             type="date"
             name="issueDate"
