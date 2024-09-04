@@ -6,8 +6,6 @@ import Pharmacist from './pages/Pharmacist/pharmacist';
 import Owner from './pages/Owner/owner';
 import Login from './pages/Login/login';
 
-
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 

@@ -13,7 +13,7 @@ const PrescriptionForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await proposePrescription(signer, patient, id, amount);
+            await proposePrescription(signer, patient, id, amount, "0x0");
             alert("Prescription proposed successfully!");
         } catch (error) {
             alert("Error proposing prescription");

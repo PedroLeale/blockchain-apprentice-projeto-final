@@ -61,7 +61,7 @@ const MintPrescriptionForm = () => {
     try {
       // Fetch pre-signed URL
       const response = await axios.put(
-        `/${process.env.REACT_APP_STAGE}/app/mint-prescription`,
+        `${process.env.STAGE}/app/mint-prescription`,
         {
           params: {
             key: `prescriptions/${Date.now()}.json`,
