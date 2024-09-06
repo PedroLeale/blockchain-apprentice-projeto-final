@@ -16,3 +16,6 @@ applications:
       cache:
         paths:
           - node_modules/**/*
+      environment:
+        variables:
+          BACKEND_URL: https://tw3fohgk74.execute-api.us-east-1.amazonaws.com/dev/app
