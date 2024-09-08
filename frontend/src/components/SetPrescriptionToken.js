@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { setPrescriptionToken } from "../../contracts/contractInteraction";
-import { useContract } from "../../hooks/useContract";
+import { setPrescriptionToken } from "../contracts/contractInteraction";
+import { useContract } from "../hooks/useContract";
 
 const SetPrescriptionToken = () => {
   const [tokenAddress, setTokenAddress] = useState("");
