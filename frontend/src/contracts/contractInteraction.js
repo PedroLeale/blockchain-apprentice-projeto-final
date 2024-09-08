@@ -17,7 +17,7 @@ export const setPrescriptionToken = async (signer, prescriptionAddress) => {
   PRESCRIPTION_ADDRESS = prescriptionAddress;
   const contract = await getPrescriptionContract();
   const contractWithSigner = contract.connect(signer);
-  const tx = await contractWithSigner.SetPrescriptionToken(prescriptionAddress); 
+  const tx = await contractWithSigner.SetPrescriptionToken(prescriptionAddress);
   await tx.wait();
 };
 

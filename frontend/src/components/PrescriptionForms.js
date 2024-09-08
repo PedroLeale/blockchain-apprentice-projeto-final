@@ -8,7 +8,7 @@ const PrescriptionForm = () => {
     const [id, setId] = useState("");
     const [amount, setAmount] = useState("");
 
-    const {signer} = useContract();
+    const { signer } = useContract();
 
     const handleSubmit = async (e) => {
         e.preventDefault();

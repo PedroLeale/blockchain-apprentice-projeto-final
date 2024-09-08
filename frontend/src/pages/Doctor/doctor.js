@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import PrescriptionForm from "../../components/PrescriptionForms";
+import ProposePrescription from "../../components/ProposePrescription";
 import Button from "../../components/Button";
 import ListPrescriptions from "../../components/listPrescriptions";
 
@@ -9,7 +10,7 @@ const Doctor = () => {
   return (
     <div>
       <h1>Doctor Page</h1>
-      <PrescriptionForm />
+      <ProposePrescription />
       <Button onClick={() => setShowPrescriptions(!showPrescriptions)}>
         {showPrescriptions ? 'Hide Prescriptions' : 'Show Prescriptions'}
       </Button>
