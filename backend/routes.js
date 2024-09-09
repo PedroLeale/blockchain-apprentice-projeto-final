@@ -1,11 +1,11 @@
 const router = require("express").Router()
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
-//verificar se o servidor está on
+
 router.get("/health", (req, res) => {
   res.status(200).json({ status: "OK" })
 })
-// é uma rota devolvem uma url pre assinada que interage com o s3
+
 router.put('/mint-prescription', async (req, res) => {
   const { key, expires } = req.body;
 

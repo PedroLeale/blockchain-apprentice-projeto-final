@@ -3,13 +3,13 @@ import Button from "./Button";
 import axios from "axios";
 import { mintPrescriptionTokens } from "../contracts/contractInteraction";
 import { useContract } from "../hooks/useContract";
+import { ethers } from "ethers";
 import "../styles/Button.css";
 
 const MintPrescriptionForm = () => {
   const [showForm, setShowForm] = useState(false);
   const [prescription, setPrescription] = useState({
     prescriptionId: "",
-    doctor: { address: "", licenseNumber: "" },
     amount: 0,
     medication: [{ name: "", dosage: "", frequency: "", duration: "" }],
     issueDate: "",
@@ -61,7 +61,7 @@ const MintPrescriptionForm = () => {
     try {
       // Fetch pre-signed URL
       const response = await axios.put(
-        `${process.env.BACKEND_URL}/mint-prescription`,
+        `/mint-prescription`,
         {
           key: `prescriptions/${prescription.prescriptionId}.json`,
           expires: 300, // URL expiration time in seconds
@@ -78,9 +78,9 @@ const MintPrescriptionForm = () => {
 
       // Extract the prescription ID from the pre-signed URL
       const prescriptionId = new URL(presignedUrl).pathname.split("/").pop();
-
+      let data_field = ethers.toUtf8Bytes(prescriptionId);
       // Call mintPrescriptionTokens with the prescription ID
-      await mintPrescriptionTokens(signer, prescription.amount, prescriptionId);
+      await mintPrescriptionTokens(signer, prescription.amount, data_field);
       alert("Prescription" + prescriptionId + "minted successfully!");
     } catch (error) {
       alert("Error minting prescription: " + error);
@@ -97,20 +97,6 @@ const MintPrescriptionForm = () => {
             name="prescriptionId"
             placeholder="Prescription ID"
             value={prescription.prescriptionId}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="doctor.address"
-            placeholder="Doctor Address"
-            value={prescription.doctor.address}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="doctor.licenseNumber"
-            placeholder="Doctor License Number"
-            value={prescription.doctor.licenseNumber}
             onChange={handleInputChange}
           />
           <input

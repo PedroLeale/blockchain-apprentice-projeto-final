@@ -6,17 +6,16 @@ const PrescriptionForm = () => {
   const [patient, setPatient] = useState("");
   const [id, setId] = useState("");
   const [amount, setAmount] = useState("");
-  const [data, setData] = useState("");
 
-  const provider = useContract();
+  const {signer} = useContract();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await proposePrescription(provider, patient, id, amount, data);
+      await proposePrescription(signer, patient, id, amount);
       alert("Prescription proposed successfully!");
     } catch (error) {
-      alert("Error proposing prescription");
+      alert("Error proposing prescription " + error);
     }
   };
 
@@ -39,12 +38,6 @@ const PrescriptionForm = () => {
         placeholder="Amount"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Data"
-        value={data}
-        onChange={(e) => setData(e.target.value)}
       />
       <button type="submit">Propose Prescription</button>
     </form>

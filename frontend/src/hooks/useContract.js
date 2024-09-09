@@ -8,15 +8,15 @@ export const useContract = () => {
   useEffect(() => {
     const initProvider = async () => {
       const rpcUrl = process.env.REACT_APP_RPC_URL;
-      if (rpcUrl) {
-        const _provider = new ethers.JsonRpcProvider(rpcUrl);
-        setProvider(_provider);
-      } else if (window.ethereum) {
+      if (window.ethereum) {
         const _provider = new ethers.BrowserProvider(window.ethereum);
         await _provider.send("eth_requestAccounts", []);
         setProvider(_provider);
-        const _signer = _provider.getSigner();
+        const _signer = await _provider.getSigner();
         setSigner(_signer);
+      } else if (rpcUrl) {
+        const _provider = new ethers.JsonRpcProvider(rpcUrl);
+        setProvider(_provider);
       }
     };
     initProvider();
