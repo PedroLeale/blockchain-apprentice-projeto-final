@@ -60,7 +60,7 @@ const MintPrescriptionForm = () => {
 
     try {
       const response = await axios.put(
-        `${process.env.REACT_BACKEND_URL}/mint-prescription`,
+        `${process.env.REACT_APP_BACKEND_URL}/mint-prescription`,
         {
           key: `prescriptions/${prescription.prescriptionId}.json`,
           expires: 300,
