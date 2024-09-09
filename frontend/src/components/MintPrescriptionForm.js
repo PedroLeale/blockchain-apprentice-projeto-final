@@ -59,17 +59,16 @@ const MintPrescriptionForm = () => {
     e.preventDefault();
 
     try {
-      // Fetch pre-signed URL
       const response = await axios.put(
-        `/mint-prescription`,
+        `${process.env.BACKEND_URL}/mint-prescription`,
         {
           key: `prescriptions/${prescription.prescriptionId}.json`,
-          expires: 300, // URL expiration time in seconds
+          expires: 300,
         }
       );
       const presignedUrl = response.data.url;
       console.log(response.data);
-      // Upload prescription JSON to S3 using the pre-signed URL
+      
       await axios.put(presignedUrl, JSON.stringify(prescription), {
         headers: {
           "Content-Type": "application/json",
