@@ -78,7 +78,7 @@ const MintPrescriptionForm = () => {
       const prescriptionId = new URL(presignedUrl).pathname.split("/").pop();
       let data_field = ethers.toUtf8Bytes(prescriptionId);
 
-      await mintPrescriptionTokens(signer, prescription.amount, data_field);
+      await mintPrescriptionTokens(signer, prescription.prescriptionId, prescription.amount, data_field);
       alert("Prescription" + prescriptionId + "minted successfully!");
     } catch (error) {
       alert("Error minting prescription: " + error);

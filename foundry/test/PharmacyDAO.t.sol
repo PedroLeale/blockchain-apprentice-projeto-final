@@ -29,15 +29,15 @@ contract PharmacyTest is Test {
 
     function testMinting() public {
         vm.startPrank(pharmacist);
-        pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(1, 100, bytes(""));
         uint256 balance = prescription.balanceOf(address(pharmacyDAO), 1);
         assertEq(balance, 100);
 
-        pharmacyDAO.mintPrescriptionTokens(50, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(2, 50, bytes(""));
         balance = prescription.balanceOf(address(pharmacyDAO), 2);
         assertEq(balance, 50);
 
-        pharmacyDAO.mintPrescriptionTokens(25, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(3, 25, bytes(""));
         balance = prescription.balanceOf(address(pharmacyDAO), 3);
         assertEq(balance, 25);
 
@@ -46,7 +46,7 @@ contract PharmacyTest is Test {
 
     function testProposal() public {
         vm.prank(pharmacist);
-        pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(1, 100, bytes(""));
 
         vm.startPrank(doctor);
 
@@ -68,7 +68,7 @@ contract PharmacyTest is Test {
 
     function testApprovalAndDeliverance() public {
         vm.prank(pharmacist);
-        pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(1, 100, bytes(""));
 
         vm.prank(doctor);
         pharmacyDAO.proposePrescription(patient, 1, 50, bytes("aaa"));
@@ -89,7 +89,7 @@ contract PharmacyTest is Test {
 
     function testReject() public {
         vm.prank(pharmacist);
-        pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(1, 100, bytes(""));
 
         vm.prank(doctor);
         pharmacyDAO.proposePrescription(patient, 1, 50, bytes("aaa"));
@@ -105,7 +105,7 @@ contract PharmacyTest is Test {
 
     function testPartialReject() public {
         vm.prank(pharmacist);
-        pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(1, 100, bytes(""));
 
         vm.prank(doctor);
         pharmacyDAO.proposePrescription(patient, 1, 50, bytes("aaa"));
@@ -142,9 +142,9 @@ contract PharmacyTest is Test {
 
     function testBurn() public {
         vm.startPrank(pharmacyOwner);
-        pharmacyDAO.mintPrescriptionTokens(100, bytes(""));
-        pharmacyDAO.mintPrescriptionTokens(50, bytes(""));
-        pharmacyDAO.mintPrescriptionTokens(25, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(1, 100, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(2, 50, bytes(""));
+        pharmacyDAO.mintPrescriptionTokens(3, 25, bytes(""));
 
         pharmacyDAO.burnPrescription(1, 50);
         uint256 balance = prescription.balanceOf(address(pharmacyDAO), 1);

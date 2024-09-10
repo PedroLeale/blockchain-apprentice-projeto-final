@@ -21,10 +21,10 @@ export const setPrescriptionToken = async (signer, prescriptionAddress) => {
   await tx.wait();
 };
 
-export const mintPrescriptionTokens = async (signer, amount, cid) => {
+export const mintPrescriptionTokens = async (signer, id, amount, cid) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.mintPrescriptionTokens(amount, cid);
+  return await contractWithSigner.mintPrescriptionTokens(id, amount, cid);
 };
 
 export const proposePrescription = async (signer, patient, id, amount) => {
