@@ -135,15 +135,15 @@ const MintPrescriptionForm = () => {
                 onChange={(e) => handleMedicationChange(index, e)}
               />
               {prescription.medication.length > 1 && (
-                <button type="button" onClick={() => removeMedication(index)}>
+                <Button type="button" onClick={() => removeMedication(index)}>
                   Remove Medication
-                </button>
+                </Button>
               )}
             </div>
           ))}
-          <button type="button" onClick={addMedication}>
+          <Button type="button" onClick={addMedication}>
             Add Medication
-          </button>
+          </Button>
           <input
             type="date"
             name="issueDate"
@@ -164,7 +164,7 @@ const MintPrescriptionForm = () => {
             value={prescription.notes}
             onChange={handleInputChange}
           />
-          <button type="submit">Submit</button>
+          <Button type="submit">Submit</Button>
         </form>
       )}
     </div>

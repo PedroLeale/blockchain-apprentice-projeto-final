@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { checkPrescription } from "../contracts/contractInteraction";
 import { useContract } from "../hooks/useContract";
-
+import Button from './Button';
 const CheckPrescription = () => {
   const [prescriptionId, setPrescriptionId] = useState("");
   const [prescriptionState, setPrescriptionState] = useState(null);
@@ -45,7 +45,7 @@ const CheckPrescription = () => {
         onChange={(e) => setPrescriptionId(e.target.value)}
         placeholder="Enter Prescription ID"
       />
-      <button onClick={handleCheckPrescription}>Check</button>
+      <Button onClick={handleCheckPrescription}>Check</Button>
       {error && <p className="error">{error}</p>}
       {prescriptionState !== null && (
         <p className="prescription-state">
