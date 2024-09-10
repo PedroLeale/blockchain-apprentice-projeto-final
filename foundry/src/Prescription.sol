@@ -35,16 +35,13 @@ contract Prescription is ERC1155, Ownable {
    * @param cid ipfs content identifier
    */
     function mint(
+        uint256 id,
         uint256 amount,
         bytes memory cid
-    ) public onlyOwner returns (uint256) {
-        _currentTokenID++;
-        uint256 newItemId = _currentTokenID;
-
-        _mint(owner(), newItemId, amount, cid);
-        prescriptionState[newItemId] = PrescriptionState.PENDING;
-        emit Minted(newItemId, amount, block.timestamp);
-        return newItemId;
+    ) public onlyOwner {
+        _mint(owner(), id, amount, cid);
+        prescriptionState[id] = PrescriptionState.PENDING;
+        emit Minted(id, amount, block.timestamp);
     }
 
     function burn(uint256 id, uint256 amount) public onlyOwner {

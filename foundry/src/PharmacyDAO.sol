@@ -89,8 +89,8 @@ contract PharmacyDAO is ERC1155Holder {
     * @dev Minta tokens de prescrição e os distribui para este contrato.
     * Este contrato guardar estes tokens tem como objetivo servir de estoque de prescrições.
     */
-    function mintPrescriptionTokens(uint256 amount, bytes memory cid) public OnlyPharmacist() {
-        prescriptionToken.mint(amount, cid);
+    function mintPrescriptionTokens(uint256 id, uint256 amount, bytes memory cid) public OnlyPharmacist() {
+        prescriptionToken.mint(id, amount, cid);
     }
 
     /**
