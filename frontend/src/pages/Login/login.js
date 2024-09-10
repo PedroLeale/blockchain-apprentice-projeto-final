@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/login.css';
 import farmacialogo from '../../assets/farmacialogo.png'; 
 import Footer from '../../components/Footer';
-import '../../styles/Footer.css';
+
 const Login = ({ onLogin }) => {
   const [account, setAccount] = useState(null);
   const [signature, setSignature] = useState('');
@@ -27,7 +27,7 @@ const Login = ({ onLogin }) => {
         clearInterval(typingInterval);
         setTimeout(() => {
           setTextIndex((textIndex + 1) % phrases.length);
-        }, 2000); // Troca de idioma após 2 segundos
+        }, 2000); 
       }
     }, 100);
 
@@ -74,7 +74,6 @@ const Login = ({ onLogin }) => {
         </div>
       )}
       {errorMessage && <p className="error">{errorMessage}</p>}
-      {/* Adiciona o Footer ao final da página */}
       <Footer />
     </div>
   );

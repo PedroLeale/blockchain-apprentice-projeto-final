@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/listPrescriptions.css"; // Import the CSS file
+import "../styles/listPrescriptions.css"; 
 
 const ListPrescriptions = () => {
   const [files, setFiles] = useState([]);

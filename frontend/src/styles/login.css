@@ -1,22 +1,19 @@
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  /* Corpo da página com fundo "glass" */
   body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Roboto Mono', monospace;
-    background: linear-gradient(135deg, rgba(229, 229, 229, 0), rgba(229, 229, 229, 0.8)); /* Cinza nublado */
-    backdrop-filter: blur(10px); /* Desfoque */
-    -webkit-backdrop-filter: blur(10px); /* Desfoque no Safari */
+    background: linear-gradient(135deg, rgba(229, 229, 229, 0), rgba(229, 229, 229, 0.8)); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
   }
   
-  /* Container com efeito de vidro */
   .login-container {
     display: flex;
     flex-direction: column;
@@ -25,17 +22,16 @@
     height: 100vh;
     padding: 20px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.9); /* Transparência com efeito de vidro */
+    background: rgba(255, 255, 255, 0.9); 
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    -webkit-backdrop-filter: blur(10px); /* Efeito de desfoque do vidro */
+    -webkit-backdrop-filter: blur(10px); 
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Borda suave */
+    border: 1px solid rgba(255, 255, 255, 0.3); 
     position: relative;
-    z-index: 10; /* Garantir que esteja acima do conteúdo */
+    z-index: 10; 
   }
   
-  /* Texto de boas-vindas com animação */
   .typing-text {
     font-family: 'Roboto Mono', monospace;
     color: #333;
@@ -57,7 +53,7 @@
     padding: 12px 24px;
     font-size: 16px;
     color: #fff;
-    background-color: #f57c00; /* Botão laranja */
+    background-color: #f57c00; 
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -65,16 +61,15 @@
   }
   
   .login-button:hover {
-    background-color: #e65100; /* Laranja mais escuro ao passar o mouse */
+    background-color: #e65100; 
     transform: translateY(-2px);
   }
   
   .login-button:active {
-    background-color: #bf360c; /* Laranja ainda mais escuro ao clicar */
+    background-color: #bf360c; 
     transform: translateY(0);
   }
   
-  /* Caixa estilizada para endereço MetaMask e assinatura */
   .account-box, .signature-box {
     padding: 12px;
     background-color: rgba(255, 255, 255, 0.8);
@@ -87,21 +82,19 @@
     backdrop-filter: blur(10px);
   }
   
-  /* Estilo da mensagem de erro */
   .error {
-    color: #d32f2f; /* Vermelho para mensagens de erro */
+    color: #d32f2f; 
     margin-top: 20px;
     font-size: 14px;
   }
   
-  /* Imagem do logo */
+  
   .logo {
-    width: 250px; /* Ajuste o tamanho da imagem conforme necessário */
+    width: 250px; 
     height: auto;
     margin-bottom: 20px;
   }
   
-  /* Ocultar a página de login após o login */
   .login-hidden {
     display: none;
   }

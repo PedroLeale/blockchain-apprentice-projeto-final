@@ -1,31 +1,31 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
 .btn {
-  background-color: #add8e6; /* Light blue background */
+  background-color: #add8e6; 
   color: black;
-  padding: 10px 20px; /* Aumentado para um botão mais robusto */
+  padding: 10px 20px; 
   border: none;
   border-radius: 8px; 
   cursor: pointer;
   font-size: 16px; 
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   margin: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .btn:hover {
-  background-color: #87ceeb; /* Light sky blue */
-  transform: translateY(-2px); /* Efeito de elevação */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra mais forte */
+  background-color: #87ceeb; 
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
 }
 
 .btn:active {
-  background-color: #6495ed; /* Cornflower blue */
-  transform: translateY(1px); /* Efeito de pressão */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra reduzida */
+  background-color: #6495ed; 
+  transform: translateY(1px); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .btn:focus {
-  outline: none; /* Remove o contorno padrão */
-  box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Sombra de foco */
+  outline: none; 
+  box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); 
 }
