@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Button from "./Button";
 import axios from "axios";
 import { mintPrescriptionTokens } from "../contracts/contractInteraction";
 import { useContract } from "../hooks/useContract";
 import { ethers } from "ethers";
 import "../styles/Button.css";
+import Button from './Button';
 
 const MintPrescriptionForm = () => {
   const [showForm, setShowForm] = useState(false);
@@ -135,15 +135,15 @@ const MintPrescriptionForm = () => {
                 onChange={(e) => handleMedicationChange(index, e)}
               />
               {prescription.medication.length > 1 && (
-                <Button type="button" onClick={() => removeMedication(index)}>
+                <button type="button" onClick={() => removeMedication(index)}>
                   Remove Medication
-                </Button>
+                </button>
               )}
             </div>
           ))}
-          <Button type="button" onClick={addMedication}>
+          <button type="button" onClick={addMedication}>
             Add Medication
-          </Button>
+          </button>
           <input
             type="date"
             name="issueDate"
@@ -164,7 +164,7 @@ const MintPrescriptionForm = () => {
             value={prescription.notes}
             onChange={handleInputChange}
           />
-          <Button type="submit">Submit</Button>
+          <button type="submit">Submit</button>
         </form>
       )}
     </div>

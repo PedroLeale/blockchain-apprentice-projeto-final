@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/login.css';
-import farmacialogo from '../../assets/farmacialogo.png'; // Ajuste conforme a estrutura do projeto
+import farmacialogo from '../../assets/farmacialogo.png'; 
 
 const Login = ({ onLogin }) => {
   const [account, setAccount] = useState(null);
@@ -47,7 +47,7 @@ const Login = ({ onLogin }) => {
         });
         setSignature(signature);
 
-        setIsLoggedIn(true); // Atualiza o estado para indicar que o login foi realizado
+        setIsLoggedIn(true); 
         onLogin();
       } catch (error) {
         setErrorMessage('Erro ao conectar ao MetaMask: ' + error.message);
