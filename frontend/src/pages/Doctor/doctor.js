@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import ProposePrescription from "../../components/ProposePrescription";
 import Button from "../../components/Button";

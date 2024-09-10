@@ -6,7 +6,6 @@ const PHARMACY_DAO_ADDRESS = process.env.REACT_APP_PHARMACY_DAO_ADDRESS;
 let PRESCRIPTION_ADDRESS = process.env.REACT_APP_PRESCRIPTION_ADDRESS;
 
 export const getPharmacyDAOContract = (provider, signer) => {
-  console.log("process.env.REACT_APP_PHARMACY_DAO_ADDRESS", process.env.REACT_APP_PHARMACY_DAO_ADDRESS);
   return new ethers.Contract(PHARMACY_DAO_ADDRESS, PharmacyDAO.abi, signer || provider);
 };
 
@@ -73,8 +72,6 @@ export const removeDoctor = async (signer, doctorAddress) => {
 }
 
 export const addPharmacist = async (signer, pharmacistAddress) => {
-  console.log('addPharmacist', signer, pharmacistAddress)
-  console.log('Contract address is', PHARMACY_DAO_ADDRESS)
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
   return await contractWithSigner.addPharmacist(pharmacistAddress);
@@ -84,4 +81,10 @@ export const removePharmacist = async (signer, pharmacistAddress) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
   return await contractWithSigner.removePharmacist(pharmacistAddress);
+}
+
+export const checkPrescription = async (provider, prescriptionId) => {
+  const contract = getPharmacyDAOContract(provider, null);
+  const contractWithSigner = contract.connect(provider);
+  return await contractWithSigner.checkPrescriptionState(prescriptionId);
 }

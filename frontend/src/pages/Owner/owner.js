@@ -9,8 +9,6 @@ const owner = () => {
     <AddPharmacist />;
     <RemovePharmacist />
     <SetPrescriptionToken />
-
-
   </div>
   );
 };

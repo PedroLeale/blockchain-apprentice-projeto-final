@@ -75,10 +75,9 @@ const MintPrescriptionForm = () => {
         },
       });
 
-      // Extract the prescription ID from the pre-signed URL
       const prescriptionId = new URL(presignedUrl).pathname.split("/").pop();
       let data_field = ethers.toUtf8Bytes(prescriptionId);
-      // Call mintPrescriptionTokens with the prescription ID
+
       await mintPrescriptionTokens(signer, prescription.amount, data_field);
       alert("Prescription" + prescriptionId + "minted successfully!");
     } catch (error) {
