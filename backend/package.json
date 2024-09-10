@@ -12,6 +12,7 @@
   "dependencies": {
     "aws-sdk": "^2.1688.0",
     "axios": "^1.7.7",
+    "backend": "file:",
     "express": "^4.19.2",
     "serverless-http": "^3.2.0"
   },
