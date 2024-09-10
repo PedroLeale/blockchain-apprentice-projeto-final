@@ -13,7 +13,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 */
 
 contract Prescription is ERC1155, Ownable {
-    uint256 private _currentTokenID = 0;
 
     enum PrescriptionState {
         PENDING,

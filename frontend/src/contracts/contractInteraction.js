@@ -17,14 +17,14 @@ export const setPrescriptionToken = async (signer, prescriptionAddress) => {
   PRESCRIPTION_ADDRESS = prescriptionAddress;
   const contract = await getPrescriptionContract();
   const contractWithSigner = contract.connect(signer);
-  const tx = await contractWithSigner.SetPrescriptionToken(prescriptionAddress);
+  const tx = await contractWithSigner.SetPrescriptionToken(prescriptionAddress, { gasPrice: 0 });
   await tx.wait();
 };
 
 export const mintPrescriptionTokens = async (signer, id, amount, cid) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.mintPrescriptionTokens(id, amount, cid);
+  return await contractWithSigner.mintPrescriptionTokens(id, amount, cid, { gasPrice: 0 });
 };
 
 export const proposePrescription = async (signer, patient, id, amount) => {
@@ -32,59 +32,59 @@ export const proposePrescription = async (signer, patient, id, amount) => {
   const contractWithSigner = contract.connect(signer);
   let data = "Proposal";
   data = ethers.toUtf8Bytes(data);
-  return await contractWithSigner.proposePrescription(patient, id, amount, data);
+  return await contractWithSigner.proposePrescription(patient, id, amount, data, { gasPrice: 0 });
 };
 
 export const approvePrescription = async (signer, prescriptionId) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.approvePrescription(prescriptionId);
+  return await contractWithSigner.approvePrescription(prescriptionId, { gasPrice: 0 });
 };
 
 export const rejectPrescription = async (signer, patientAddress, prescriptionId, ammount) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.rejectPrescription(patientAddress, prescriptionId, ammount);
+  return await contractWithSigner.rejectPrescription(patientAddress, prescriptionId, ammount, { gasPrice: 0 });
 }
 
 export const deliverPrescription = async (signer, prescriptionId) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.deliverPrescription(prescriptionId);
+  return await contractWithSigner.deliverPrescription(prescriptionId, { gasPrice: 0 });
 }
 
 export const burnPrescription = async (signer, prescriptionId, amount) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.burnPrescription(prescriptionId, amount);
+  return await contractWithSigner.burnPrescription(prescriptionId, amount, { gasPrice: 0 });
 }
 
 export const addDoctor = async (signer, doctorAddress) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.addDoctor(doctorAddress);
+  return await contractWithSigner.addDoctor(doctorAddress, { gasPrice: 0 });
 }
 
 export const removeDoctor = async (signer, doctorAddress) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.removeDoctor(doctorAddress);
+  return await contractWithSigner.removeDoctor(doctorAddress, { gasPrice: 0 });
 }
 
 export const addPharmacist = async (signer, pharmacistAddress) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.addPharmacist(pharmacistAddress);
+  return await contractWithSigner.addPharmacist(pharmacistAddress, { gasPrice: 0 });
 }
 
 export const removePharmacist = async (signer, pharmacistAddress) => {
   const contract = getPharmacyDAOContract(null, signer);
   const contractWithSigner = contract.connect(signer);
-  return await contractWithSigner.removePharmacist(pharmacistAddress);
+  return await contractWithSigner.removePharmacist(pharmacistAddress, { gasPrice: 0 });
 }
 
 export const checkPrescription = async (provider, prescriptionId) => {
   const contract = getPharmacyDAOContract(provider, null);
   const contractWithSigner = contract.connect(provider);
-  return await contractWithSigner.checkPrescriptionState(prescriptionId);
+  return await contractWithSigner.checkPrescriptionState(prescriptionId, { gasPrice: 0 });
 }
