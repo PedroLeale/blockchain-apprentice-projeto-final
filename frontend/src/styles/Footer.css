@@ -1,28 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
 .footer {
-    background: linear-gradient(180deg, #f9f9f9 0%, #e2e2e2 100%); /* Gradiente mais suave */
+    background: linear-gradient(180deg, #f9f9f9 0%, #e2e2e2 100%);
     color: #333;
     text-align: center;
-    padding: 15px 10px; /* Reduzi o padding para um visual mais compacto */
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.1); /* Sombra mais sutil */
-    font-family: 'Roboto Mono', monospace; /* Aplicando Roboto Mono */
-    z-index: 1000;
+    padding: 15px 10px;
+    position: fixed; /* Mantém o footer fixo */
+    width: 100%; /* Garante que o footer ocupe toda a largura */
+    bottom: 0; /* Fixa o footer na parte inferior */
+    left: 0; /* Garante que o footer fique alinhado à esquerda */
+    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto Mono', monospace;
+    z-index: 1000; /* Mantém o footer acima de outros elementos */
 }
 
 .footer p {
-    margin: 5px 0; /* Reduzi o espaço entre as linhas */
-    font-size: 15px; /* Tamanho de fonte menor para um visual mais clean */
-    font-weight: 700; /* Fonte em negrito */
+    margin: 5px 0;
+    font-size: 15px;
+    font-weight: 700;
 }
 
 .footer a {
     color: #007bff;
     text-decoration: none;
-    font-weight: 700; /* Fonte em negrito para links */
+    font-weight: 700;
 }
 
 .footer a:hover {
@@ -30,6 +31,12 @@
 }
 
 .footer .footer-content {
-    max-width: 1000px; /* Reduzi a largura máxima do conteúdo */
-    margin: 0 auto; /* Mantém o conteúdo centralizado */
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Adicione este estilo para garantir que o conteúdo da página não fique escondido atrás do footer */
+body {
+    margin-bottom: 60px; /* Ajuste este valor de acordo com a altura do seu footer */
+    min-height: 100vh; /* Garante que o body ocupe pelo menos toda a altura da viewport */
 }
