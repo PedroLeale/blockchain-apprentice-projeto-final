@@ -70,7 +70,7 @@ contract Prescription is ERC1155, Ownable {
         emit PrescriptionDelivered(id, block.timestamp);
     }
 
-    function checkPrescriptionState(uint256 id) public view returns (PrescriptionState) {
+    function checkPrescriptionState(uint256 id) public onlyOwner view returns (PrescriptionState) {
         return prescriptionState[id];
     }
 }

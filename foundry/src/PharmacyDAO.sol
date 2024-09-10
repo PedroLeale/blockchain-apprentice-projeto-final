@@ -126,6 +126,13 @@ contract PharmacyDAO is ERC1155Holder {
     }
 
     /**
+    * @return PENDING = 0, APPROVED = 1, DELIVERED = 2
+    */
+    function checkPrescriptionState(uint256 id) public view returns (uint8) {
+        return uint8(prescriptionToken.checkPrescriptionState(id));
+    }
+
+    /**
     * @param id ID da prescrição aprovada a ser entregue
     * @dev Deve ser chamada quando a prescrição for aprovada e o(s) remédio(s) fisicamente entregue(s) ao paciente.
     */
