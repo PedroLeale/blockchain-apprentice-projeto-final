@@ -28,7 +28,7 @@ router.put('/mint-prescription', async (req, res) => {
 router.get('/list-prescriptions', async (req, res) => {
   const params = {
     Bucket: process.env.S3_BUCKET_NAME,
-    Prefix: 'prescriptions/', // Ensure we list objects within the 'prescriptions' folder
+    Prefix: 'prescriptions/',
   };
 
   try {
@@ -36,8 +36,25 @@ router.get('/list-prescriptions', async (req, res) => {
     const jsonFiles = data.Contents.filter(item => item.Key.endsWith('.json')).map(item => item.Key);
     res.json(jsonFiles);
   } catch (error) {
-    console.error('Error listing prescriptions:', error); // Log the error
+    console.error('Error listing prescriptions:', error);
     res.status(500).json({ error: 'Error listing prescriptions' });
+  }
+});
+
+router.get('/get-prescription', async (req, res) => {
+  const { key } = req.query;
+
+  const params = {
+    Bucket: process.env.S3_BUCKET_NAME,
+    Key: key,
+  };
+
+  try {
+    const data = await s3.getObject(params).promise();
+    res.json(JSON.parse(data.Body.toString()));
+  } catch (error) {
+    console.error('Error getting prescription:', error);
+    res.status(500).json({ error: 'Error getting prescription' });
   }
 });
 
