@@ -1,22 +1,31 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
 .btn {
-  background-color: #add8e6;
-  /* Light blue background */
-  color: white;
-  padding: 5px 10px;
-  /* Reduzido para deixar o botão mais fino */
+  background-color: #add8e6; /* Light blue background */
+  color: black;
+  padding: 10px 20px; /* Aumentado para um botão mais robusto */
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; 
   cursor: pointer;
-  font-size: 14px;
-  /* Tamanho da fonte reduzido */
-  transition: background-color 0.3s ease;
+  font-size: 16px; 
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   margin: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
 .btn:hover {
-    background-color: #87ceeb; 
-  }
-  
+  background-color: #87ceeb; /* Light sky blue */
+  transform: translateY(-2px); /* Efeito de elevação */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra mais forte */
+}
+
 .btn:active {
-    background-color: #6495ed; 
-  }
+  background-color: #6495ed; /* Cornflower blue */
+  transform: translateY(1px); /* Efeito de pressão */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra reduzida */
+}
+
+.btn:focus {
+  outline: none; /* Remove o contorno padrão */
+  box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Sombra de foco */
+}

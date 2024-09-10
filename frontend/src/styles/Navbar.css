@@ -1,26 +1,77 @@
+/* Estilo da Navbar */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Evita a rolagem */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; /* Permite que o conteúdo principal ocupe o espaço restante */
+  overflow-y: auto; /* Permite a rolagem interna se necessário */
+}
+
 .navbar {
-  background-color: #add8e6; 
-  padding: 1rem;
+  background-color: #98B9F2; /* Cor de fundo mais sofisticada */
+  padding: 1rem 2rem; /* Espaçamento aumentado */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  position: fixed; /* Fixa a navbar no topo */
+  width: 100%; /* Largura total da tela */
+  top: 0; /* Posiciona no topo da página */
+  z-index: 1000; /* Garante que a navbar fique acima de outros elementos */
+  left: 0; /* Garante que a Navbar se estenda até a borda esquerda */
 }
 
 .navbar ul {
   list-style-type: none;
   display: flex;
   justify-content: space-around;
+  align-items: center; /* Alinha itens verticalmente */
+  margin: 0;
+  padding: 0;
 }
 
 .navbar li {
-  margin: 0 1rem;
+  margin: 0 1.5rem; /* Espaçamento maior entre itens */
 }
 
 .navbar a {
-  color: black;
+  color: #ffffff; /* Cor branca para contraste */
   text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease; 
+  font-size: 1.1rem; /* Tamanho da fonte um pouco maior */
+  font-weight: 500; /* Peso da fonte um pouco mais forte */
+  transition: color 0.3s ease, transform 0.3s ease, padding 0.3s ease; /* Adiciona transição para padding */
+  position: relative; /* Necessário para efeito de pseudo-elemento */
+}
+
+.navbar a::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #1e90ff; /* Linha de destaque */
+  transition: width 0.3s ease; /* Transição para a linha de destaque */
+}
+
+.navbar a:hover::before {
+  width: 100%; /* Linha de destaque se expande ao passar o mouse */
 }
 
 .navbar a:hover {
-  color: #1e90ff; 
-  text-decoration: underline;
-  transform: scale(2.2); 
+  color: #ffffff; /* Mantém a cor do texto ao passar o mouse */
+  padding-bottom: 6px; /* Adiciona um pouco de espaçamento no fundo ao passar o mouse */
+  transform: translateY(-2px); /* Efeito de elevação */
+}
+
+.navbar a:active {
+  transform: translateY(0); /* Remove o efeito de elevação ao clicar */
 }
