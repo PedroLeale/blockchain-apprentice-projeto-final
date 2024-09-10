@@ -2,6 +2,7 @@ import React from 'react';
 import AddPharmacist from '../../components/addPharmacist';
 import RemovePharmacist from '../../components/removePharmacist';
 import SetPrescriptionToken from '../../components/SetPrescriptionToken';
+import Footer from '../../components/Footer';
 
 const owner = () => {
   return (<div>
@@ -9,6 +10,7 @@ const owner = () => {
     <AddPharmacist />
     <RemovePharmacist />
     <SetPrescriptionToken />
+    <Footer />
   </div>
   );
 };

@@ -48,7 +48,7 @@
     100% { opacity: 0; }
   }
   
-  /* Estilos do botão */
+  
   .login-button {
     padding: 12px 24px;
     font-size: 16px;
@@ -90,10 +90,11 @@
   
   
   .logo {
-    width: 250px; 
+    width: 500px; 
     height: auto;
-    margin-bottom: 20px;
-  }
+    margin-bottom: 10px; 
+    margin-top: 20px; 
+}
   
   .login-hidden {
     display: none;

@@ -1,4 +1,3 @@
-
 html,
 body {
   height: 100%;
@@ -12,41 +11,42 @@ body {
 }
 
 .main-content {
-  flex: 1; 
-  overflow-y: auto; 
+  flex: 1;
+  overflow-y: auto;
 }
 
 .navbar {
   background-color: #98B9F2; 
-  padding: 1rem 2rem; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  position: fixed; 
-  width: 100%; 
-  top: 0; 
-  z-index: 1000; 
-  left: 0; 
+  padding: 1.5rem 3rem; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  left: 0;
+  transition: background-color 0.3s ease; 
 }
 
 .navbar ul {
   list-style-type: none;
   display: flex;
   justify-content: space-around;
-  align-items: center; 
+  align-items: center;
   margin: 0;
   padding: 0;
 }
 
 .navbar li {
-  margin: 0 1.5rem; 
+  margin: 0 2rem; 
 }
 
 .navbar a {
   color: #ffffff;
   text-decoration: none;
-  font-size: 1.1rem; 
-  font-weight: 500; 
-  transition: color 0.3s ease, transform 0.3s ease, padding 0.3s ease; 
-  position: relative; 
+  font-size: 1.3rem; 
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease, transform 0.3s ease, padding 0.3s ease;
 }
 
 .navbar a::before {
@@ -55,21 +55,28 @@ body {
   bottom: 0;
   left: 0;
   width: 0;
-  height: 2px;
-  background-color: #1e90ff; 
-  transition: width 0.3s ease; 
+  height: 2px; 
+  background-color: #60E1E0;
+  transition: width 0.3s ease;
 }
 
 .navbar a:hover::before {
-  width: 100%; 
+  width: 100%;
 }
 
 .navbar a:hover {
-  color: #ffffff; 
-  padding-bottom: 6px; 
-  transform: translateY(-2px); 
+  color: #ffffff;
+  padding-bottom: 8px; 
+  transform: translateY(-2px);
 }
 
 .navbar a:active {
-  transform: translateY(0); 
+  transform: translateY(0);
+}
+
+.navbar a.active {
+  color: #60E1E0; 
+  font-weight: 700; 
+  padding-bottom: 8px; 
+  border-bottom: 3px solid #60E1E0; 
 }

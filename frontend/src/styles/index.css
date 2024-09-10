@@ -4,12 +4,23 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%; /* Garante que html e body ocupem toda a altura da viewport */
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #98B9F2; 
-  color: #333; 
+  background-color: #98B9F2; /* Cor de fundo que cobre toda a tela */
+  color: #333;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column; /* Permite que o conteúdo se estenda verticalmente */
 }
+
+.main-content {
+  flex: 1; /* Permite que o conteúdo principal ocupe o restante do espaço disponível */
+}
+
 
 form {
   display: flex;
