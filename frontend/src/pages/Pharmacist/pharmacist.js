@@ -9,7 +9,6 @@ import AddPharmacist from '../../components/addPharmacist';
 import ListPrescriptions from '../../components/listPrescriptions';
 import Button from '../../components/Button';
 import CheckPrescription from '../../components/checkPrescription';
-import Footer from '../../components/Footer';
 
 const Pharmacist = () => {
   const [showPrescriptions, setShowPrescriptions] = useState(false);
@@ -33,7 +32,6 @@ const Pharmacist = () => {
         {showPrescriptions ? 'Hide Prescriptions' : 'Show Prescriptions'}
       </Button>
       {showPrescriptions && <ListPrescriptions />}
-      <Footer />
     </div>
   );
 };

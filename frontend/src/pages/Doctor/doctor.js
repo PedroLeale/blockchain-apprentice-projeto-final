@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ProposePrescription from "../../components/ProposePrescription";
 import Button from "../../components/Button";
 import ListPrescriptions from "../../components/listPrescriptions";
-import Footer from '../../components/Footer';
 
 
 const Doctor = () => {
@@ -19,7 +18,6 @@ const Doctor = () => {
         {showPrescriptions ? 'Hide Prescriptions' : 'Show Prescriptions'}
       </Button>
       {showPrescriptions && <ListPrescriptions />}
-      <Footer />
     </div>
   );
 };
