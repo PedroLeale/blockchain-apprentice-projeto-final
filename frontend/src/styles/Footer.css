@@ -1,0 +1,33 @@
+.footer {
+    background-color: #5E6472; /* Cor de fundo para combinar com o tema */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidade */
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    z-index: 100; /* Mantém o footer acima de outros elementos */
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .footer {
+      font-size: 14px; /* Ajusta o tamanho da fonte para telas menores */
+      padding: 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .footer {
+      font-size: 12px; /* Ajusta ainda mais o tamanho da fonte para telas muito pequenas */
+      padding: 10px;
+    }
+  }
+  

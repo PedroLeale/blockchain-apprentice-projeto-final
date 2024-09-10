@@ -3,6 +3,7 @@ import ProposePrescription from "../../components/ProposePrescription";
 import Button from "../../components/Button";
 import ListPrescriptions from "../../components/listPrescriptions";
 
+
 const Doctor = () => {
   const [showPrescriptions, setShowPrescriptions] = useState(false);
   const [showPrescriptionForm, setShowPrescriptionForm] = useState(false);
