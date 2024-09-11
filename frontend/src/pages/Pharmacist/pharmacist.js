@@ -9,10 +9,12 @@ import AddPharmacist from '../../components/addPharmacist';
 import ListPrescriptions from '../../components/listPrescriptions';
 import Button from '../../components/Button';
 import CheckPrescription from '../../components/checkPrescription';
+import CheckPatientBalance from '../../components/checkPatientBalance';
 
 const Pharmacist = () => {
   const [showPrescriptions, setShowPrescriptions] = useState(false);
   const [showCheckPrescription, setShowCheckPrescription] = useState(false);
+  const [showCheckPatientBalance, setShowCheckPatientBalance] = useState(false);
 
   return (
     <div>
@@ -22,11 +24,15 @@ const Pharmacist = () => {
       <ApprovePrescription />
       <RejectPrescription />
       <DeliverPrescription />
+      <Button onClick={() => setShowCheckPatientBalance(!showCheckPatientBalance)}>
+        {showCheckPatientBalance ? 'Hide Check Patient Balance' : 'Show Check Patient Balance'}
+      </Button>
+      {showCheckPatientBalance && <CheckPatientBalance />}
+      <ManageDoctor />
       <Button onClick={() => setShowCheckPrescription(!showCheckPrescription)}>
         {showCheckPrescription ? 'Hide Check Prescription' : 'Show Check Prescription'}
       </Button>
       {showCheckPrescription && <CheckPrescription />}
-      <ManageDoctor />
       <AddPharmacist />
       <Button onClick={() => setShowPrescriptions(!showPrescriptions)}>
         {showPrescriptions ? 'Hide Prescriptions' : 'Show Prescriptions'}

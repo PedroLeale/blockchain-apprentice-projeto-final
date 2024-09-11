@@ -88,3 +88,9 @@ export const checkPrescription = async (provider, prescriptionId) => {
   const contractWithSigner = contract.connect(provider);
   return await contractWithSigner.checkPrescriptionState(prescriptionId, { gasPrice: 0 });
 }
+
+export const checkPatientPrescriptionBalance = async(provider, patientAddress, prescriptionId) => {
+  const contract = getPrescriptionContract(provider, null);
+  const contractWithSigner = contract.connect(provider);
+  return await contractWithSigner.balanceOf(patientAddress, prescriptionId, { gasPrice: 0 });
+}
